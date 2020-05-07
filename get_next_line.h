@@ -14,19 +14,19 @@
 # define GET_NEXT_LINE_H
 
 //TODO check the include libs
-# include <fcnt1.h>
-# include <sys/types.h>
-# include <sys/uio.h> 
+# include <unistd.h>
 # include <stdlib.h>
 
 # define BUFFER_SIZE	10
 
 typedef struct		s_list
 {
-	char			*str;
+	int				fd;
+	char			flag_done;
+	char			*last;
 	struct s_list	*next;
 }					t_list;
 
-int				get_next_line(int fd, char **line);
+int					get_next_line(int fd, char **line);
 
 #endif
