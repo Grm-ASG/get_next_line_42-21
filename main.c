@@ -31,10 +31,14 @@ int				main(int argc, char **argv)
 	}
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
-	while(get_next_line(fd, &str))
+	int j;
+	while((j = get_next_line(fd, &str)) && i < 10)
 	{
+		if (j < 0)
+			break;
 		i++;
-		printf("string[%d] = %s \n", i,  str);
+		printf("string[%d]	= %s\n", i,  str);
 	}
+	printf("\nreturn from gnl = %d\n", j);
 	return (0);
 }
