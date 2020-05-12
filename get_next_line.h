@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:07:33 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/12 20:23:08 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/12 23:30:01 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ typedef struct		s_gnl
 	int				end;
 	char			*tail;
 	char			*start_tail;
+	char			*line_back_up;
 	struct s_gnl	*next;
 }					t_gnl;
 
 int					get_next_line(int fd, char **line);
-char				*ft_strchr(const char *s, int c);
-size_t				ft_strlen(const char *s);
-void				ft_strcpy(char *dest, const char *src);
-char				*ft_strdup(const char *s);
 t_gnl				*ft_lst_new(int fd);
+t_gnl				*ft_find_lst(int fd, t_gnl **prime);
+char				*ft_strchr(const char *s, int c);
+char				*ft_strdup(const char *s);
+int					ft_exit(char *buf, int fd, t_gnl **prime, int result);
 
 #endif
