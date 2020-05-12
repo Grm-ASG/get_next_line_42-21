@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:01:27 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/12 23:20:15 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/13 00:24:15 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int				main(int argc, char **argv)
 		return (1);
 	}
 	fd = open(argv[1], O_RDONLY);
+	printf("fd = %d\n", fd);
 	while ((j = get_next_line(fd, &str)))
 	{
 		if (j < 0)

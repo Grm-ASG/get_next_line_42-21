@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 20:11:14 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/12 23:44:37 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/13 00:24:43 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 	char			*p_lf;
 
 	p_lf = NULL;
-	ret = BUFFER_SIZE;
-	if (!(buf = (char *)malloc(BUFFER_SIZE + 1)))
+	ret = BUFF_SIZE;
+	if (!(buf = (char *)malloc(BUFF_SIZE + 1)))
 		return (ft_exit(buf, fd, prime, -1));
-	while (!p_lf && t_temp->tail == NULL && (ret = read(fd, buf, BUFFER_SIZE)))
+	while (!p_lf && t_temp->tail == NULL && (ret = read(fd, buf, BUFF_SIZE)))
 	{
 		if (ret < 0)
 			return (ft_exit(buf, fd, prime, -1));
@@ -107,7 +107,7 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 	if (ret == 0 && *line[0] == '\0')
 		return (ft_exit(buf, fd, prime, 0));
 	free(buf);
-	if (ret < BUFFER_SIZE && t_temp->tail == NULL)
+	if (ret < BUFF_SIZE && t_temp->tail == NULL)
 		t_temp->end = 1;
 	return (1);
 }
@@ -118,9 +118,9 @@ int				get_next_line(int fd, char **line)
 	t_gnl			*t_temp;
 	char			check[1];
 
-	if (fd < 0 || !line ||
-		(read(fd, check, 0)) < 0 ||
-		!(t_temp = ft_find_lst(fd, &prime)) ||
+	if (!line || fd < 0 || ((read(fd, check, 0)) < 0))
+		return (-1);
+	if (!(t_temp = ft_find_lst(fd, &prime)) ||
 		!(*line = ft_last_str(line, t_temp)))
 		return (ft_exit(NULL, fd, &prime, -1));
 	if (t_temp->end && *line[0] == '\0')

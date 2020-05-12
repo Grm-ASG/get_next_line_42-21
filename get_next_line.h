@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:07:33 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/12 23:30:01 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/13 00:21:01 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
+# define BUFF_SIZE 2000
 
 typedef struct		s_gnl
 {
