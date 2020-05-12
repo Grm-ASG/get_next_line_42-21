@@ -1,2 +1,2 @@
 gcc -Wall -Werror -Wextra *.c
-./a.out test.txt
+./a.out gnl5_3.txt

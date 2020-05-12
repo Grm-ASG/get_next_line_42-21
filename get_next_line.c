@@ -69,9 +69,9 @@ static char		*ft_last_str(char **line, t_gnl *temp)
 		temp->tail = NULL;
 		return (*line);
 	}
-	*p_lf = '\0';
+	*p_lf++ = '\0';
 	*line = ft_strdup(temp->tail);
-	temp->tail = ++p_lf;
+	temp->tail = p_lf;
 	return (*line);
 }
 
@@ -157,7 +157,7 @@ int				get_next_line(int fd, char **line)
     p_lf = NULL;
 	if (fd < 0 || !line || !(*line = ft_last_str(line, (t_temp = ft_find_lst(fd, &prime)))))
 		return (-1);
-	if (t_temp->end)
+	if (t_temp->end && *line[0] == '\0')
 	    return (ft_exit(fd, &prime, line));
 	while (t_temp->tail == NULL && (ret = read(fd, buf, BUFFER_SIZE)))
     {
@@ -176,9 +176,15 @@ int				get_next_line(int fd, char **line)
 	    tmp = *line;
 	    *line = ft_strjoin(*line, buf);
 	    free(tmp);
-        if (p_lf)
+//		printf("ret		= %d\n", ret);
+//		printf("buf		= %s\n", buf);
+//		printf("line		= %s\n", *line);
+//		printf("t_temp->tail	= %s\n", t_temp->tail);
+		if (p_lf)
             break;
     }
+	if (ret == 0 && *line[0] == '\0')
+		return (0);
     if (ret < BUFFER_SIZE && t_temp->tail == NULL)
         t_temp->end = 1;
     return (*line == NULL ? -1 : 1);
