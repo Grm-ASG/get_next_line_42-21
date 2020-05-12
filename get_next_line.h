@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE	150
+# define BUFFER_SIZE	100
 
 typedef struct		s_gnl
 {

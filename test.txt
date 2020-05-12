@@ -1,12 +1,1 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Phasellus nec nunc pharetra, dignissim nisl non, consequat tortor.
-Mauris fermentum nulla nec justo bibendum venenatis.
-Sed finibus, ante ut imperdiet consectetur, ante ex gravida nunc
-Non sodales nisi velit eu sapien.
-Sed mi lectus, consequat at augue feugiat, dignissim aliquam odio.
-Nam rhoncus rutrum mauris id rhoncus.
-Ut id nunc eu sem lobortis venenatis sit amet et urna.
-Vestibulum posuere nisl augue, ac molestie nisi pulvinar in.
-Nunc varius luctus turpis vitae lacinia.
-Cras eu lorem tellus.
-Cras lectus felis, consectetur sit amet mattis nec, imperdiet at dui.
+Lorem.
