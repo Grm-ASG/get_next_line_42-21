@@ -22,7 +22,7 @@ int				main(int argc, char **argv)
 {
 	int		i;
 	int		fd;
-	char	*str;
+	char	*str = NULL;
 
 	if (argc != 2)
 	{
@@ -31,14 +31,16 @@ int				main(int argc, char **argv)
 	}
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
+    printf("file was opened!\nfd = %d\n", fd);
 	int j;
-	while((j = get_next_line(fd, &str)) && i < 10)
+	while((j = get_next_line(fd, &str)) && i < 20)
 	{
 		if (j < 0)
 			break;
 		i++;
 		printf("string[%d]	= %s\n", i,  str);
 	}
-	printf("\nreturn from gnl = %d\n", j);
+	printf("\nreturn from gnl   = %d\n", j);
+    printf("BUFFER_SIZE       = %d\n", BUFFER_SIZE);
 	return (0);
 }

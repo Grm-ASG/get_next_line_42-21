@@ -19,25 +19,15 @@
 
 # define BUFFER_SIZE	150
 
-typedef struct		s_list
+typedef struct		s_gnl
 {
 	int				fd;
+    int				end;
 	char			*tail;
-	struct s_list	*next;
-}					t_list;
+	char			*start_tail;
+	struct s_gnl	*next;
+}					t_gnl;
 
 int					get_next_line(int fd, char **line);
-static char			*ft_strcpy_mod(char **line, char **src, int ret[][2]);
-static char			*ft_strjoin(char const *s1, char const *s2);
-static char			*ft_line_sep(char buf[], char *p_n, char **tail, int ret);
-static t_list		*ft_lstnew(int fd);
-static t_list		*ft_find_lst(t_list **prime, int fd);
-static size_t		ft_strlen(const char *s);
-static void			*ft_memcpy(void *dest, const void *src, size_t n);
-static char			*ft_strchr(char *s, int c);
-static char			*ft_strdup(char *s);
-static void			*ft_calloc(size_t nmemb, size_t size);
-static void			ft_strcpy(char *dest, char *src);
-static int			ft_strcmp(char *s1, char *s2);
 
 #endif

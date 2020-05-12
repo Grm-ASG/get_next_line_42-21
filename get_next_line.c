@@ -13,104 +13,173 @@
 
 #include "get_next_line.h"
 
-static char			*ft_strcpy_mod(char **line, char **src, int ret[][2])
+static char 	*ft_strchr(const char *s, int c)
 {
-	char	*p_n;
-	char	*tmp;
+    while (*s)
+        if (*s++ == (unsigned char)c)
+            return ((char *)--s);
+    if (*s == (unsigned char)c)
+        return ((char *)s);
+    return (NULL);
+}
 
-	if ((*src) == NULL)
-		return (ft_calloc(1, 1));
-	if (!(p_n = ft_strchr((*src), '\n')))
-		ft_strcpy(((*line) = malloc(ft_strlen(*src) + 1)), *src);
-	else
+size_t				ft_strlen(const char *s)
+{
+    size_t i;
+
+    i = 0;
+    while (s[i] != '\0')
+        i++;
+    return (i);
+}
+
+static void     ft_strcpy(char *dest, const char *src)
+{
+    while (*src)
+        *dest++ = *src++;
+    *dest = '\0';
+}
+
+char			*ft_strdup(const char *s)
+{
+    const size_t    s_len = ft_strlen(s);
+    char            *new;
+
+    if (!(new = (char *)malloc(s_len + 1)))
+        return (NULL);
+    ft_strcpy(new, s);
+    return (new);
+}
+
+static char		*ft_last_str(char **line, t_gnl *temp)
+{
+	char		*p_lf;
+
+	if (!temp)
+		return (NULL);
+	if ((*line) != NULL)
+		free(*line);
+	if (temp->tail == NULL)
+		return ((char *)calloc(1,1)); //TODO
+	if ((p_lf = ft_strchr(temp->tail, '\n')) == NULL)
 	{
-		(*src)[p_n - (*src)] = '\0';
-		ft_strcpy(((*line) = malloc(ft_strlen(*src) + 1)), *src);
-		tmp = (*src);
-		if (!((*src) = ft_strdup(++p_n)))
-			return (NULL);
-		free(tmp);
-		if (!(p_n = ft_strchr((*src), '\n')))
-			(*ret)[1] = 0;
-		else
-			(*ret)[1] = 1;
-		if (!ft_strcmp((*line), (*src)))
-			free (*src);
+		*line = ft_strdup(temp->tail);
+		free (temp->start_tail);
+		temp->start_tail = NULL;
+		temp->tail = NULL;
+		return (*line);
 	}
+	*p_lf = '\0';
+	*line = ft_strdup(temp->tail);
+	temp->tail = ++p_lf;
 	return (*line);
 }
 
-static char			*ft_strjoin(char const *s1, char const *s2)
+static t_gnl	*ft_lst_new(int fd)
 {
-	const int 	len_s1 = (s1? ft_strlen(s1) : 0);
-	char *new;
-	const char *tmp = s1;
-	char *ptr;
+	t_gnl		*new;
 
-	if (!(new = (char *)malloc(len_s1 + ft_strlen(s2) + 1)))
+	if (!(new = (t_gnl *)malloc(sizeof(t_gnl))))
 		return (NULL);
-	ptr = new;
-	if (s1)
-	{
-		while (*s1)
-			*ptr++ = *s1++;
-	}
-	while (*s2)
-		*ptr++ = *s2++;
-	*ptr = '\0';
-	if (tmp)
-		free((char *)tmp);
+	new->fd = fd;
+	new->tail = NULL;
+	new->start_tail = NULL;
+	new->next = NULL;
 	return (new);
 }
 
-static char			*ft_line_sep(char buf[], char *p_n, char **tail, int ret[][2])
+static t_gnl	*ft_find_lst(int fd, t_gnl **prime)
 {
-	char	*p_ntmp;
+	t_gnl		*temp;
 
-	*p_n++ = '\0';
-printf("buf		= %s\n", buf);
-	if (!(p_ntmp = ft_strchr(p_n, '\n')));
-	{
-		return (ft_strjoin((*line), buf));
-	}
-	else
-	{
-		if (tmp->tail != NULL && !(tmp->tail = ft_strjoin(tmp->tail, p_n)))
-		{
-			return (NULL);
-		}
-		else if (!(tmp->tail = ft_strdup(&buf[p_n - buf + 1])))
-			return (NULL);
-	}
-	return (NULL);
+	if (*prime == NULL)
+		return ((*prime = ft_lst_new(fd)));
+	temp = *prime;
+	while (temp->fd != fd && temp->next != NULL)
+		temp = temp->next;
+	return (temp->fd == fd? temp : (temp->next = ft_lst_new(fd)));
 }
 
-int					get_next_line(int fd, char **line)
+static char		*ft_strjoin(char const *s1, char const *s2)
 {
-	static t_list	*prime;
-	t_list			*tmp;
-	char			buf[BUFFER_SIZE + 1];
-	char			*p_n;
-	int				ret[2];
+    char *new;
+    char *ptr;
 
-	ret[1] = 0;
-	if (!(fd == 0 || fd > 2) || !(tmp = ft_find_lst(&prime, fd)) ||
-		!((*line) = ft_strcpy_mod(line, &tmp->tail, &ret)))
+    if (!(new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+        return (NULL);
+    ptr = new;
+    while (*s1)
+        *ptr++ = *s1++;
+    while (*s2)
+        *ptr++ = *s2++;
+    *ptr = '\0';
+    return (new);
+}
+
+int             ft_exit(int fd, t_gnl **prime, char **line)
+{
+    t_gnl       *temp;
+    t_gnl       *temp1;
+
+    temp = *prime;
+    free(*line);
+    if (temp->fd == fd && temp->next == NULL)
+    {
+        free(temp);
+        *prime = NULL;
+    }
+    else if (temp->fd == fd)
+    {
+        *prime = temp->next;
+        free (temp);
+    }
+    else
+    {
+        while (temp->next->fd != fd)
+            temp = temp->next;
+        temp1 = temp->next;
+        temp->next = temp1->next;
+        free(temp1);
+    }
+    return (0);
+}
+
+int				get_next_line(int fd, char **line)
+{
+	static t_gnl    *prime;
+	char            buf[BUFFER_SIZE + 1];
+	int             ret;
+	char            *p_lf;
+    char            *tmp;
+
+    t_gnl           *t_temp;
+
+    p_lf = NULL;
+	if (fd < 0 || !line || !(*line = ft_last_str(line, (t_temp = ft_find_lst(fd, &prime)))))
 		return (-1);
-	if (!ret[1])
-		while ((ret[0] = read(fd, buf, BUFFER_SIZE)) != 0)
-		{
-			buf[ret[0]] = '\0';
-			if ((p_n = ft_strchr(buf, '\n')))
-			{
-				if (!(*line = ft_line_sep(buf, p_n, &tmp->tail, &ret)))
-					return (-1);
-				break;
-			}
-			else
-				*line = ft_strjoin((*line), buf);
-printf("line	= %s\n", (*line));
-printf("last	= %s\n", tmp->tail);
-		}
-	return (!ret[0] && !ret[1] ? 0 : 1);
+	if (t_temp->end)
+	    return (ft_exit(fd, &prime, line));
+	while (t_temp->tail == NULL && (ret = read(fd, buf, BUFFER_SIZE)))
+    {
+        if (ret < 0)
+            return (-1);
+        buf[ret] = '\0';
+	    if ((p_lf = ft_strchr(buf, '\n')))
+        {
+	        *p_lf++ = '\0';
+	        if (*p_lf != '\0')
+            {
+                t_temp->tail = ft_strdup(p_lf);
+                t_temp->start_tail = t_temp->tail;
+            }
+        }
+	    tmp = *line;
+	    *line = ft_strjoin(*line, buf);
+	    free(tmp);
+        if (p_lf)
+            break;
+    }
+    if (ret < BUFFER_SIZE && t_temp->tail == NULL)
+        t_temp->end = 1;
+    return (*line == NULL ? -1 : 1);
 }
