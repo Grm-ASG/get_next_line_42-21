@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:07:33 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/13 00:33:21 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/13 14:51:55 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 typedef struct		s_gnl
 {
 	int				fd;
-	int				end;
 	char			*tail;
 	char			*start_tail;
 	char			*line_back_up;

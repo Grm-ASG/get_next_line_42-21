@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 20:09:52 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/13 00:26:43 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/13 14:52:40 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_gnl		*ft_lst_new(int fd)
 	if (!(new = (t_gnl *)malloc(sizeof(t_gnl))))
 		return (NULL);
 	new->fd = fd;
-	new->end = 0;
 	new->tail = NULL;
 	new->start_tail = NULL;
 	new->line_back_up = NULL;

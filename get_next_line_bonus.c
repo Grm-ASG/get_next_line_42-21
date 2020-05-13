@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/13 01:10:16 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/13 01:10:18 by imedgar          ###   ########.fr       */
+/*   Created: 2020/05/13 15:07:41 by imedgar           #+#    #+#             */
+/*   Updated: 2020/05/13 15:07:48 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,9 @@ static int		get_line_sup(char *buf, char **p_lf, t_gnl *t_temp, char **line)
 	{
 		(**p_lf) = '\0';
 		++(*p_lf);
-		if ((**p_lf) != '\0')
-		{
-			if (!(t_temp->tail = ft_strdup(*p_lf)))
-				return (-1);
-			t_temp->start_tail = t_temp->tail;
-		}
+		if (!(t_temp->tail = ft_strdup(*p_lf)))
+			return (-1);
+		t_temp->start_tail = t_temp->tail;
 	}
 	t_temp->line_back_up = *line;
 	if (!(*line = ft_strjoin(*line, buf)))
@@ -106,9 +103,8 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 	}
 	if (ret == 0 && *line[0] == '\0')
 		return (ft_exit(buf, fd, prime, 0));
-	free(buf);
 	if (ret < BUFFER_SIZE && t_temp->tail == NULL)
-		t_temp->end = 1;
+		return (ft_exit(buf, fd, prime, 0));
 	return (1);
 }
 
@@ -123,7 +119,5 @@ int				get_next_line(int fd, char **line)
 	if (!(t_temp = ft_find_lst(fd, &prime)) ||
 		!(*line = ft_last_str(line, t_temp)))
 		return (ft_exit(NULL, fd, &prime, -1));
-	if (t_temp->end && *line[0] == '\0')
-		return (ft_exit(NULL, fd, &prime, 0));
 	return (get_line(fd, line, t_temp, &prime));
 }
