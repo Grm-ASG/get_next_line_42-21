@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 15:07:41 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/13 15:07:48 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/13 15:34:10 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 		if (res_from_sup == -1)
 			return (ft_exit(buf, fd, prime, -1));
 	}
-	if (ret == 0 && *line[0] == '\0')
-		return (ft_exit(buf, fd, prime, 0));
 	if (ret < BUFFER_SIZE && t_temp->tail == NULL)
 		return (ft_exit(buf, fd, prime, 0));
 	return (1);
