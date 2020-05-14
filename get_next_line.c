@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 15:34:27 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/13 15:34:32 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/14 16:20:12 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,6 @@ static char		*ft_last_str(char **line, t_gnl *temp)
 	return (*line);
 }
 
-static char		*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*new;
-	char	*ptr;
-	size_t	len_s1;
-	size_t	len_s2;
-
-	len_s1 = 0;
-	len_s2 = 0;
-	while (s1[len_s1] != '\0')
-		++len_s1;
-	while (s2[len_s2] != '\0')
-		++len_s2;
-	if (!(new = (char *)malloc(len_s1 + len_s2 + 1)))
-		return (NULL);
-	ptr = new;
-	while (*s1)
-		*ptr++ = *s1++;
-	while (*s2)
-		*ptr++ = *s2++;
-	*ptr = '\0';
-	return (new);
-}
-
 static int		get_line_sup(char *buf, char **p_lf, t_gnl *t_temp, char **line)
 {
 	if (((*p_lf) = ft_strchr(buf, '\n')))
@@ -89,10 +65,10 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 	char			*p_lf;
 
 	p_lf = NULL;
-	ret = BUFFER_SIZE;
+	ret = 0;
 	if (!(buf = (char *)malloc(BUFFER_SIZE + 1)))
 		return (ft_exit(buf, fd, prime, -1));
-	while (!p_lf && t_temp->tail == NULL && (ret = read(fd, buf, BUFFER_SIZE)))
+	while (!p_lf && !t_temp->tail && (ret = read(fd, buf, BUFFER_SIZE)))
 	{
 		if (ret < 0)
 			return (ft_exit(buf, fd, prime, -1));
@@ -103,6 +79,7 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 	}
 	if (ret < BUFFER_SIZE && t_temp->tail == NULL)
 		return (ft_exit(buf, fd, prime, 0));
+	free(buf);
 	return (1);
 }
 
@@ -112,7 +89,9 @@ int				get_next_line(int fd, char **line)
 	t_gnl			*t_temp;
 	char			check[1];
 
-	if (!line || fd < 0 || ((read(fd, check, 0)) < 0))
+	if (BUFFER_SIZE < 1 ||
+		!line || fd < 0 ||
+		((read(fd, check, 0)) < 0))
 		return (-1);
 	if (!(t_temp = ft_find_lst(fd, &prime)) ||
 		!(*line = ft_last_str(line, t_temp)))

@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 20:09:52 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/13 14:52:40 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/05/14 16:04:16 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,28 @@ int			ft_exit(char *buf, int fd, t_gnl **prime, int result)
 		free(temp1);
 	}
 	return (result == -1 ? -1 : 0);
+}
+
+char		*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*new;
+	char	*ptr;
+	size_t	len_s1;
+	size_t	len_s2;
+
+	len_s1 = 0;
+	len_s2 = 0;
+	while (s1[len_s1] != '\0')
+		++len_s1;
+	while (s2[len_s2] != '\0')
+		++len_s2;
+	if (!(new = (char *)malloc(len_s1 + len_s2 + 1)))
+		return (NULL);
+	ptr = new;
+	while (*s1)
+		*ptr++ = *s1++;
+	while (*s2)
+		*ptr++ = *s2++;
+	*ptr = '\0';
+	return (new);
 }
