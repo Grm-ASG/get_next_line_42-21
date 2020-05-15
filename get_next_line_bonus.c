@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/14 16:22:48 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/14 19:21:26 by imedgar          ###   ########.fr       */
+/*   Created: 2020/05/14 19:17:57 by imedgar           #+#    #+#             */
+/*   Updated: 2020/05/14 19:22:12 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char		*ft_strjoin_gnl(char const *s1, char const *s2)
 {
@@ -86,8 +86,8 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 {
 	const long long	buf_s = BUFFER_SIZE;
 	long long		ret;
-	char			*p_lf;
 	char			*buf;
+	char			*p_lf;
 	int				res_from_sup;
 
 	p_lf = NULL;
@@ -111,10 +111,10 @@ static int		get_line(int fd, char **line, t_gnl *t_temp, t_gnl **prime)
 
 int				get_next_line(int fd, char **line)
 {
-	const long long	buf_s = BUFFER_SIZE;
 	static t_gnl	*prime;
 	t_gnl			*t_temp;
 	char			check[1];
+	const long long	buf_s = BUFFER_SIZE;
 
 	if (buf_s < 1 ||
 		!line || fd < 0 ||

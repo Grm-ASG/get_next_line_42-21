@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/12 20:09:52 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/14 18:57:36 by imedgar          ###   ########.fr       */
+/*   Created: 2020/05/14 18:59:58 by imedgar           #+#    #+#             */
+/*   Updated: 2020/05/14 19:00:07 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char		*ft_strchr_gnl(const char *s, int c)
 {
