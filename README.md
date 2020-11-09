@@ -1,1 +1,0 @@
-![gnl](https://user-images.githubusercontent.com/62895333/82016856-905eb300-968a-11ea-939d-d8db504122d7.jpg)
