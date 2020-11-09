@@ -6,7 +6,7 @@
 /*   By: imedgar <imedgar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 16:22:48 by imedgar           #+#    #+#             */
-/*   Updated: 2020/05/14 19:21:26 by imedgar          ###   ########.fr       */
+/*   Updated: 2020/11/09 21:30:57 by imedgar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int				get_next_line(int fd, char **line)
 	if (buf_s < 1 ||
 		!line || fd < 0 ||
 		((read(fd, check, 0)) < 0))
-		return (-1);
+		return (ft_exit_gnl(NULL, fd, &prime, -1));
 	if (!(t_temp = ft_find_lst_gnl(fd, &prime)) ||
 		!(*line = ft_last_str(line, t_temp)))
 		return (ft_exit_gnl(NULL, fd, &prime, -1));
